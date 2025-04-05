@@ -1,4 +1,5 @@
 export { download, maybeDownload } from './download/download'
 export * from './index.shared'
 import maybeGetSnarkArtifacts from './download/index.node'
-export { maybeGetSnarkArtifacts }
+import { maybeGetCompiledNoirCircuit } from './download/index.node'
+export { maybeGetCompiledNoirCircuit, maybeGetSnarkArtifacts }
