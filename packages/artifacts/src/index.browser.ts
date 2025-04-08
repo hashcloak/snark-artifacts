@@ -1,3 +1,4 @@
 export * from './index.shared'
 import maybeGetSnarkArtifacts from './download/index.browser'
-export { maybeGetSnarkArtifacts }
+import { maybeGetCompiledNoirCircuit } from './download/index.browser'
+export { maybeGetCompiledNoirCircuit, maybeGetSnarkArtifacts }
