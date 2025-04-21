@@ -60,3 +60,18 @@ export async function maybeGetCompiledNoirCircuit(
   const json = await fs.readFile(outputPath, 'utf-8')
   return JSON.parse(json) as CompiledCircuit
 }
+
+export async function maybeGetNoirVk(
+  project: Project,
+  merkleTreeDepth: number,
+): Promise<string> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+  const SEMAPHORE_NOIR_BASE_URL = 'https://hashcloak.github.io/noir-artifacts-host'
+  const url = `${SEMAPHORE_NOIR_BASE_URL}/semaphore-vks/semaphore-vk-${merkleTreeDepth}`
+
+  const outputPath = `${tmpdir()}/snark-artifacts/semaphore-vks/semaphore-vk-${merkleTreeDepth}`
+  await maybeDownload(url, outputPath)
+
+  return outputPath
+}
