@@ -1,7 +1,7 @@
 import { CompiledCircuit } from '@noir-lang/noir_js'
 import { Project, projects } from '../projects'
 import type { SnarkArtifacts, Version } from './types'
-import { getBaseUrl } from './urls'
+import { getBaseUrl, getNoirArtifactUrl } from './urls'
 
 export default async function maybeGetSnarkArtifacts(
   project: Project,
@@ -35,7 +35,7 @@ export async function maybeGetCompiledNoirCircuit(
   if (project !== Project.SEMAPHORE_NOIR)
     throw new Error(`Unsupported project '${project}'`)
 
-  const url = `https://hashcloak.github.io/noir-artifacts-host/semaphore-noir-${merkleTreeDepth}.json`
+  const url = getNoirArtifactUrl(`semaphore-noir-${merkleTreeDepth}.json`)
   const response = await fetch(url)
 
   if (!response.ok)
@@ -51,8 +51,8 @@ export async function maybeGetNoirVk(
 ): Promise<Buffer> {
   if (project !== Project.SEMAPHORE_NOIR)
     throw new Error(`Unsupported project '${project}'`)
-  const SEMAPHORE_NOIR_BASE_URL = 'https://hashcloak.github.io/noir-artifacts-host'
-  const url = `${SEMAPHORE_NOIR_BASE_URL}/semaphore-vks/semaphore-vk-${merkleTreeDepth}`
+
+  const url = getNoirArtifactUrl(`semaphore-vks/semaphore-vk-${merkleTreeDepth}`)
   const response = await fetch(url)
   if (!response.ok)
     throw new Error(`Failed to fetch circuit: ${response.statusText}`)

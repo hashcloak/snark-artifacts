@@ -6,6 +6,7 @@ import { maybeDownload } from './download'
 import _maybeGetSnarkArtifacts from './index.browser'
 import { maybeGetCompiledNoirCircuit as _maybeGetCompiledNoirCircuit } from './index.browser'
 import type { SnarkArtifacts } from './types'
+import { getNoirArtifactUrl } from './urls'
 
 const extractEndPath = (url: string) => url.split('pse.dev/')[1]
 
@@ -51,9 +52,7 @@ export async function maybeGetCompiledNoirCircuit(
   if (project !== Project.SEMAPHORE_NOIR)
     throw new Error(`Unsupported project '${project}'`)
 
-  const SEMAPHORE_NOIR_BASE_URL = 'https://hashcloak.github.io/noir-artifacts-host'
-  const url = `${SEMAPHORE_NOIR_BASE_URL}/semaphore-noir-${merkleTreeDepth}.json`
-
+  const url = getNoirArtifactUrl(`semaphore-noir-${merkleTreeDepth}.json`)
   const outputPath = `${tmpdir()}/snark-artifacts/semaphore-noir-${merkleTreeDepth}.json`
   await maybeDownload(url, outputPath)
 
@@ -67,9 +66,8 @@ export async function maybeGetNoirVk(
 ): Promise<Buffer> {
   if (project !== Project.SEMAPHORE_NOIR)
     throw new Error(`Unsupported project '${project}'`)
-  const SEMAPHORE_NOIR_BASE_URL = 'https://hashcloak.github.io/noir-artifacts-host'
-  const url = `${SEMAPHORE_NOIR_BASE_URL}/semaphore-vks/semaphore-vk-${merkleTreeDepth}`
 
+  const url = getNoirArtifactUrl(`semaphore-vks/semaphore-vk-${merkleTreeDepth}`)
   const outputPath = `${tmpdir()}/snark-artifacts/semaphore-vks/semaphore-vk-${merkleTreeDepth}`
   await maybeDownload(url, outputPath)
   const vk = await fs.readFile(outputPath)
