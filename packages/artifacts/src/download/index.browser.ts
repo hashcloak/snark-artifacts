@@ -48,11 +48,15 @@ export async function maybeGetCompiledNoirCircuit(
 export async function maybeGetNoirVk(
   project: Project,
   merkleTreeDepth: number,
-): Promise<string> {
+): Promise<Buffer> {
   if (project !== Project.SEMAPHORE_NOIR)
     throw new Error(`Unsupported project '${project}'`)
   const SEMAPHORE_NOIR_BASE_URL = 'https://hashcloak.github.io/noir-artifacts-host'
   const url = `${SEMAPHORE_NOIR_BASE_URL}/semaphore-vks/semaphore-vk-${merkleTreeDepth}`
+  const response = await fetch(url)
+  if (!response.ok)
+    throw new Error(`Failed to fetch circuit: ${response.statusText}`)
+  const vk = await response.arrayBuffer()
 
-  return url
+  return Buffer.from(vk)
 }
