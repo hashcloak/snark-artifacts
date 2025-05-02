@@ -60,6 +60,47 @@ export async function maybeGetCompiledNoirCircuit(
   return JSON.parse(json) as CompiledCircuit
 }
 
+export async function getCompiledNoirCircuitWithPath(
+  project: Project,
+  merkleTreeDepth: number,
+): Promise<{ path: string; circuit: CompiledCircuit }> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const url = getNoirArtifactUrl(`semaphore-noir-${merkleTreeDepth}.json`)
+  const outputPath = `${tmpdir()}/snark-artifacts/semaphore-noir-${merkleTreeDepth}.json`
+  await maybeDownload(url, outputPath)
+
+  const json = await fs.readFile(outputPath, 'utf-8')
+  return {
+    path: outputPath,
+    circuit: JSON.parse(json) as CompiledCircuit,
+  }
+}
+
+export enum BatchingCircuitType {
+  Leaves = 'batch_2_leaves',
+  Nodes = 'batch_2_nodes',
+}
+
+export async function getCompiledBatchCircuitWithPath(
+  project: Project,
+  circuitType: BatchingCircuitType,
+): Promise<{ path: string; circuit: CompiledCircuit }> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const url = getNoirArtifactUrl(`/batching/${circuitType}.json`)
+  const outputPath = `${tmpdir()}/snark-artifacts/batching/circuit_${circuitType}.json`
+  await maybeDownload(url, outputPath)
+
+  const json = await fs.readFile(outputPath, 'utf-8')
+  return {
+    path: outputPath,
+    circuit: JSON.parse(json) as CompiledCircuit,
+  }
+}
+
 export async function maybeGetNoirVk(
   project: Project,
   merkleTreeDepth: number,
@@ -73,4 +114,17 @@ export async function maybeGetNoirVk(
   const vk = await fs.readFile(outputPath)
 
   return vk
+}
+
+export async function maybeGetBatchVkPath(
+  project: Project,
+): Promise<string> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const url = getNoirArtifactUrl('/batching/vk')
+  const outputPath = `${tmpdir()}/snark-artifacts/batching/vk`
+  await maybeDownload(url, outputPath)
+
+  return outputPath
 }
