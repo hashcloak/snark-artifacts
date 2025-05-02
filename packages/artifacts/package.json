@@ -36,15 +36,17 @@
     "access": "public"
   },
   "main": "./dist/index.node.js",
+  "types": "./dist/types/index.node.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/index.browser.d.ts",
       "node": {
+        "types": "./dist/types/index.node.d.ts",
         "import": "./dist/index.node.js",
         "require": "./dist/index.node.cjs",
-        "types": "./dist/types/index.node.d.ts"
+        "default": "./dist/index.node.cjs"
       },
       "browser": "./dist/index.browser.js",
-      "types": "./dist/types/index.node.d.ts",
       "default": "./dist/index.browser.js"
     }
   },
