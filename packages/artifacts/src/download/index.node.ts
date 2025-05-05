@@ -128,3 +128,18 @@ export async function maybeGetBatchVkPath(
 
   return outputPath
 }
+
+export async function maybeGetBatchSemaphoreVk(
+  project: Project,
+  merkleTreeDepth: number,
+): Promise<string[]> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const url = getNoirArtifactUrl(`/batching/semaphore-vks-fields/semaphore-vk-${merkleTreeDepth}.json`)
+  const outputPath = `${tmpdir()}/snark-artifacts/batching/semaphore-vk-${merkleTreeDepth}.json`
+  await maybeDownload(url, outputPath)
+  const json = await fs.readFile(outputPath, 'utf-8')
+
+  return JSON.parse(json)
+}
