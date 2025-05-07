@@ -1,5 +1,20 @@
 export { download, maybeDownload } from './download/download'
 export * from './index.shared'
-import maybeGetSnarkArtifacts from './download/index.node'
+import maybeGetSnarkArtifacts, {
+  BatchingCircuitType,
+  getCompiledBatchCircuitWithPath,
+  getCompiledNoirCircuitWithPath,
+  maybeGetBatchSemaphoreVk,
+  maybeGetBatchVkPath,
+} from './download/index.node'
 import { maybeGetCompiledNoirCircuit, maybeGetNoirVk } from './download/index.node'
-export { maybeGetCompiledNoirCircuit, maybeGetNoirVk, maybeGetSnarkArtifacts }
+export {
+  BatchingCircuitType,
+  getCompiledBatchCircuitWithPath,
+  getCompiledNoirCircuitWithPath,
+  maybeGetBatchSemaphoreVk,
+  maybeGetBatchVkPath,
+  maybeGetCompiledNoirCircuit,
+  maybeGetNoirVk,
+  maybeGetSnarkArtifacts,
+}
