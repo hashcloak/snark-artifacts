@@ -112,8 +112,8 @@ importers:
         specifier: ^2.3.4
         version: 2.4.7
       '@noir-lang/noir_js':
-        specifier: 1.0.0-beta.3
-        version: 1.0.0-beta.3
+        specifier: 1.0.0-beta.5
+        version: 1.0.0-beta.5
       circomkit:
         specifier: ^0.2.1
         version: 0.2.1(@types/snarkjs@0.7.8)(snarkjs@0.7.4)
@@ -810,17 +810,17 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@noir-lang/acvm_js@1.0.0-beta.3':
-    resolution: {integrity: sha512-Dc6g5rJr/x7tKsWvnTbZvjwqI1uiAtvq+NAz5tcLRzUHJw6NAvDXEH5h117h+BfIAhhsHXuPTkDfDB1Gnqp/Bg==}
+  '@noir-lang/acvm_js@1.0.0-beta.5':
+    resolution: {integrity: sha512-t2E2h7ZOkbP4+ukPfvicIGUHsF/gX0kxGIwQvOe+hcR7p2j6ttxWKBHBurQrGLuII9+6qUmp6P6fnOBNasoslQ==}
 
-  '@noir-lang/noir_js@1.0.0-beta.3':
-    resolution: {integrity: sha512-Nt/rP7zRMOfNq9urD8+GtRpYqEc0K10FoKXs/v+ZTbGaP6Jkm7+F+UPj2bkWy66k1HNzsN6ortli7c7mnLDHwA==}
+  '@noir-lang/noir_js@1.0.0-beta.5':
+    resolution: {integrity: sha512-ab0h/MTbqqj/BqWkvSpeYtTcUrv645NgNteE208QRJiM9fEwL6RcLXb3Ms54csortzLB0CVMtnV3qGkeG+Xklg==}
 
-  '@noir-lang/noirc_abi@1.0.0-beta.3':
-    resolution: {integrity: sha512-L6BI64ennatwTUciHqQ14ahUFsgzL41tzghqUELzO7XojasStcWDaSMjlTxca/2pvpWtEJHDtseKe1VZWIIVXQ==}
+  '@noir-lang/noirc_abi@1.0.0-beta.5':
+    resolution: {integrity: sha512-1ZH2oXlgwdrNliWLVbDxyY6UPCsZ+pjA8PiIdzeaE+Kpn6J3diX8MsbYHyx8em0Vn2MXWt+CSa90YdHWy+hKrw==}
 
-  '@noir-lang/types@1.0.0-beta.3':
-    resolution: {integrity: sha512-BPOmf0qDiTn4wH1Lo7mHa67GTQFueIVaDUcUb+N9+ALiXC5nVU8HrzWmx1yvZB64ZiCEy7yPdNEaNrszSrE2fg==}
+  '@noir-lang/types@1.0.0-beta.5':
+    resolution: {integrity: sha512-NNddtY4KMIA7cwa69A2NXeAVvzKX44fmojuwY1HBgzwraHOY1mWyaQC+Vl9Xm97fAm2qpXTrbVT6vPkhag0vHg==}
 
   '@octokit/auth-token@5.1.1':
     resolution: {integrity: sha512-rh3G3wDO8J9wSjfI436JUKzHIxq8NaiL0tVeB2aXmG6p/9859aUOAjA9pmSPNGGZxfwmaJ9ozOJImuNVJdpvbA==}
@@ -2431,6 +2431,9 @@ packages:
   package-json-from-dist@1.0.0:
     resolution: {integrity: sha512-dATvCeZN/8wQsGywez1mzHtTlP22H8OEfPrVMLNr4/eGa+ijtLn/6M5f0dY8UKNrC2O9UCU6SSoG3qRKnt7STw==}
 
+  pako@2.1.0:
+    resolution: {integrity: sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==}
+
   parse-json@5.2.0:
     resolution: {integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==}
     engines: {node: '>=8'}
@@ -3935,19 +3938,20 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
-  '@noir-lang/acvm_js@1.0.0-beta.3': {}
+  '@noir-lang/acvm_js@1.0.0-beta.5': {}
 
-  '@noir-lang/noir_js@1.0.0-beta.3':
+  '@noir-lang/noir_js@1.0.0-beta.5':
     dependencies:
-      '@noir-lang/acvm_js': 1.0.0-beta.3
-      '@noir-lang/noirc_abi': 1.0.0-beta.3
-      '@noir-lang/types': 1.0.0-beta.3
+      '@noir-lang/acvm_js': 1.0.0-beta.5
+      '@noir-lang/noirc_abi': 1.0.0-beta.5
+      '@noir-lang/types': 1.0.0-beta.5
+      pako: 2.1.0
 
-  '@noir-lang/noirc_abi@1.0.0-beta.3':
+  '@noir-lang/noirc_abi@1.0.0-beta.5':
     dependencies:
-      '@noir-lang/types': 1.0.0-beta.3
+      '@noir-lang/types': 1.0.0-beta.5
 
-  '@noir-lang/types@1.0.0-beta.3': {}
+  '@noir-lang/types@1.0.0-beta.5': {}
 
   '@octokit/auth-token@5.1.1': {}
 
@@ -5741,6 +5745,8 @@ snapshots:
   p-try@2.2.0: {}
 
   package-json-from-dist@1.0.0: {}
+
+  pako@2.1.0: {}
 
   parse-json@5.2.0:
     dependencies:
