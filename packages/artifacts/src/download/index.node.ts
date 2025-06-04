@@ -6,6 +6,7 @@ import { maybeDownload } from './download'
 import _maybeGetSnarkArtifacts from './index.browser'
 import { maybeGetCompiledNoirCircuit as _maybeGetCompiledNoirCircuit } from './index.browser'
 import type { SnarkArtifacts } from './types'
+import { getNoirArtifactUrl } from './urls'
 
 const extractEndPath = (url: string) => url.split('pse.dev/')[1]
 
@@ -51,12 +52,97 @@ export async function maybeGetCompiledNoirCircuit(
   if (project !== Project.SEMAPHORE_NOIR)
     throw new Error(`Unsupported project '${project}'`)
 
-  const SEMAPHORE_NOIR_BASE_URL = 'https://hashcloak.github.io/noir-artifacts-host'
-  const url = `${SEMAPHORE_NOIR_BASE_URL}/semaphore-noir-${merkleTreeDepth}.json`
-
+  const url = getNoirArtifactUrl(`semaphore-noir-${merkleTreeDepth}.json`)
   const outputPath = `${tmpdir()}/snark-artifacts/semaphore-noir-${merkleTreeDepth}.json`
   await maybeDownload(url, outputPath)
 
   const json = await fs.readFile(outputPath, 'utf-8')
   return JSON.parse(json) as CompiledCircuit
+}
+
+export async function getCompiledNoirCircuitWithPath(
+  project: Project,
+  merkleTreeDepth: number,
+): Promise<{ path: string; circuit: CompiledCircuit }> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const url = getNoirArtifactUrl(`semaphore-noir-${merkleTreeDepth}.json`)
+  const outputPath = `${tmpdir()}/snark-artifacts/semaphore-noir-${merkleTreeDepth}.json`
+  await maybeDownload(url, outputPath)
+
+  const json = await fs.readFile(outputPath, 'utf-8')
+  return {
+    path: outputPath,
+    circuit: JSON.parse(json) as CompiledCircuit,
+  }
+}
+
+export enum BatchingCircuitType {
+  Leaves = 'batch_2_leaves',
+  Nodes = 'batch_2_nodes',
+}
+
+export async function getCompiledBatchCircuitWithPath(
+  project: Project,
+  circuitType: BatchingCircuitType,
+): Promise<{ path: string; circuit: CompiledCircuit }> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const url = getNoirArtifactUrl(`/batching/${circuitType}.json`)
+  const outputPath = `${tmpdir()}/snark-artifacts/batching/circuit_${circuitType}.json`
+  await maybeDownload(url, outputPath)
+
+  const json = await fs.readFile(outputPath, 'utf-8')
+  return {
+    path: outputPath,
+    circuit: JSON.parse(json) as CompiledCircuit,
+  }
+}
+
+export async function maybeGetNoirVk(
+  project: Project,
+  merkleTreeDepth: number,
+): Promise<Buffer> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const url = getNoirArtifactUrl(`semaphore-vks/semaphore-vk-${merkleTreeDepth}`)
+  const outputPath = `${tmpdir()}/snark-artifacts/semaphore-vks/semaphore-vk-${merkleTreeDepth}`
+  await maybeDownload(url, outputPath)
+  const vk = await fs.readFile(outputPath)
+
+  return vk
+}
+
+export async function maybeGetBatchVkPath(
+  project: Project,
+  keccak?: boolean,
+): Promise<string> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const suffix = keccak ? '-keccak' : ''
+  const url = getNoirArtifactUrl(`/batching/vk${suffix}`)
+  const outputPath = `${tmpdir()}/snark-artifacts/batching/vk${suffix}`
+
+  await maybeDownload(url, outputPath)
+
+  return outputPath
+}
+
+export async function maybeGetBatchSemaphoreVk(
+  project: Project,
+  merkleTreeDepth: number,
+): Promise<string[]> {
+  if (project !== Project.SEMAPHORE_NOIR)
+    throw new Error(`Unsupported project '${project}'`)
+
+  const url = getNoirArtifactUrl(`/batching/semaphore-vks-fields/semaphore-vk-${merkleTreeDepth}.json`)
+  const outputPath = `${tmpdir()}/snark-artifacts/batching/semaphore-vk-${merkleTreeDepth}.json`
+  await maybeDownload(url, outputPath)
+  const json = await fs.readFile(outputPath, 'utf-8')
+
+  return JSON.parse(json)
 }
