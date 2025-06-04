@@ -118,12 +118,15 @@ export async function maybeGetNoirVk(
 
 export async function maybeGetBatchVkPath(
   project: Project,
+  keccak?: boolean,
 ): Promise<string> {
   if (project !== Project.SEMAPHORE_NOIR)
     throw new Error(`Unsupported project '${project}'`)
 
-  const url = getNoirArtifactUrl('/batching/vk')
-  const outputPath = `${tmpdir()}/snark-artifacts/batching/vk`
+  const suffix = keccak ? '-keccak' : ''
+  const url = getNoirArtifactUrl(`/batching/vk${suffix}`)
+  const outputPath = `${tmpdir()}/snark-artifacts/batching/vk${suffix}`
+
   await maybeDownload(url, outputPath)
 
   return outputPath
