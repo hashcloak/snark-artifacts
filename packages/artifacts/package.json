@@ -1,6 +1,6 @@
 {
-  "name": "@zk-kit/artifacts",
-  "version": "2.0.1",
+  "name": "@hashcloak/semaphore-noir-artifacts",
+  "version": "1.0.0",
   "type": "module",
   "bin": {
     "snarkli": "./dist/cli/index.js"
@@ -25,7 +25,9 @@
   ],
   "contributors": [
     "cedoor <me@cedoor.dev>",
-    "sripwoud <me@sripwoud.xyz"
+    "sripwoud <me@sripwoud.xyz",
+    "LYC386 <alex@hashcloak.com>",
+    "ewynx <elena@hashcloak.com>"
   ],
   "license": "MIT",
   "bugs": {
